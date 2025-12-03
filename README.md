@@ -92,11 +92,11 @@ Campus_closet/
 
 ## Founding Team
 
+- Nayab Azhar
 - Antonio Santarsiere
 - Ina Angebault
 - Benedetta Bertin
 - Benedikt Bodman
-- Nayab Azhar
 - Kylie Baradeau
 
 ## Campus Location

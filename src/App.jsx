@@ -307,23 +307,131 @@ const App = () => {
         </div>
       </section>
 
-      {/* --- How It Works & Footer remain the same --- */}
+      {/* --- How It Works --- */}
       <section id="how-it-works" className="py-24 bg-blue-950 text-white overflow-hidden relative">
-          {/* ... Keep the existing How it Works section code ... */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h2 className="text-4xl font-bold font-serif mb-6">The Closed-Loop System</h2>
               <p className="text-blue-200 text-lg leading-relaxed mb-8 font-light">
-                We've replaced shipping with trust. Our locker system at Champerret Campus ensures items are exchanged securely.
+                We've replaced shipping with trust. Our locker system at Champerret Campus ensures items are exchanged securely, without the need for coordinating schedules or awkward meetups.
               </p>
-               {/* ... steps ... */}
+              <div className="space-y-8">
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-full border border-blue-700 flex items-center justify-center flex-shrink-0 text-yellow-400 font-bold text-xl">1</div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Book & Deposit</h4>
+                    <p className="text-blue-300 text-sm">Secure your item with a tiered deposit (€10, €30, or €75) based on item value.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-full border border-blue-700 flex items-center justify-center flex-shrink-0 text-yellow-400 font-bold text-xl">2</div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Locker Drop-off</h4>
+                    <p className="text-blue-300 text-sm">Seller places the item in the 3rd Floor Lockers. You receive a secure QR code instantly.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 rounded-full border border-blue-700 flex items-center justify-center flex-shrink-0 text-yellow-400 font-bold text-xl">3</div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Scan & Slay</h4>
+                    <p className="text-blue-300 text-sm">Collect at your convenience. Return to the same locker when your rental period ends.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative hidden md:block">
+              <div className="bg-gradient-to-br from-blue-900 to-blue-950 p-8 rounded-2xl border border-blue-800 shadow-2xl">
+                <div className="flex justify-between items-center mb-8 border-b border-blue-800 pb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <span className="text-xs font-mono text-blue-400">locker_sys.v1</span>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center bg-blue-900/50 p-4 rounded-lg border border-blue-800">
+                    <span className="text-sm font-bold text-blue-100">Locker 42 - Champerret</span>
+                    <span className="text-xs bg-green-900 text-green-300 px-2 py-0.5 rounded uppercase tracking-wider">Occupied</span>
+                  </div>
+                  <div className="text-center py-8">
+                    <div className="text-6xl mb-4">🔐</div>
+                    <p className="text-xs text-blue-400 font-mono">SCAN TO UNLOCK</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Footer code ... */}
+
+      {/* --- Footer --- */}
+      <footer className="bg-white text-slate-900 py-16 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-12">
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-2 mb-6">
+                <Logo className="text-blue-950 w-8 h-8"/> 
+                <span className="text-xl font-bold tracking-tight text-blue-950">CampusCloset</span>
+              </div>
+              <p className="text-sm text-slate-500 leading-relaxed mb-6">
+                The first circular economy marketplace verified for ESCP Business School. Sustainable style, student prices.
+              </p>
+              <div className="inline-flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-full">
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                <span className="text-xs font-bold text-blue-900 uppercase tracking-wide">Beta Live</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Founding Team</h4>
+              <ul className="space-y-3 text-sm font-medium text-slate-700">
+                <li>Nayab Azhar</li>
+                <li>Antonio Santarsiere</li>
+                <li>Ina Angebault</li>
+                <li>Benedetta Bertin</li>
+                <li>Benedikt Bodman</li>
+                <li>Kylie Baradeau</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Campus Location</h4>
+              <div className="flex items-start mb-4">
+                <span className="text-sm text-slate-600">
+                  ESCP Business School<br/>
+                  Champerret Campus<br/>
+                  6 Avenue de la Porte de Champerret<br/>
+                  75017 Paris, France
+                </span>
+              </div>
+              <div className="flex items-center text-slate-600">
+                <Lock size={14} className="mr-2"/>
+                <span className="text-sm">3rd Floor Lockers (Hall B)</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Support</h4>
+              <ul className="space-y-2 text-sm text-slate-600">
+                <li><a href="#" className="hover:text-blue-900 transition">How Deposits Work</a></li>
+                <li><a href="#" className="hover:text-blue-900 transition">Locker Access Guide</a></li>
+                <li><a href="#" className="hover:text-blue-900 transition">Sustainability Report</a></li>
+                <li><a href="#" className="hover:text-blue-900 transition">Contact Student Admin</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
+            <p>&copy; 2025 CampusCloset Project. All rights reserved.</p>
+            <div className="mt-4 md:mt-0">
+              Built with purpose in Paris.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

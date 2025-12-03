@@ -60,3 +60,25 @@ html {
   color: #1e3a8a;
 }
 
+/* Hide scrollbar for mobile filter chips */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 640px) {
+  button, a {
+    min-height: 44px;
+  }
+}
+
+/* Fix viewport height on mobile */
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+

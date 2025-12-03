@@ -149,6 +149,62 @@ const App = () => {
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div className="px-4 py-4 space-y-1">
+              <a 
+                href="#collections" 
+                onClick={() => setIsMenuOpen(false)}
+                className="block py-3 px-4 text-slate-700 font-medium hover:bg-slate-50 rounded-lg transition"
+              >
+                Curated Collections
+              </a>
+              <a 
+                href="#marketplace" 
+                onClick={() => setIsMenuOpen(false)}
+                className="block py-3 px-4 text-slate-700 font-medium hover:bg-slate-50 rounded-lg transition"
+              >
+                Marketplace
+              </a>
+              <a 
+                href="#how-it-works" 
+                onClick={() => setIsMenuOpen(false)}
+                className="block py-3 px-4 text-slate-700 font-medium hover:bg-slate-50 rounded-lg transition"
+              >
+                Locker System
+              </a>
+              
+              <div className="pt-4 border-t border-slate-100 mt-4">
+                {isAuthenticated ? (
+                  <div className="space-y-2">
+                    <button 
+                      onClick={() => { setShowListingModal(true); setIsMenuOpen(false); }}
+                      className="w-full py-3 px-4 bg-slate-900 text-white font-bold rounded-lg flex items-center justify-center gap-2"
+                    >
+                      <Plus size={16} /> List an Item
+                    </button>
+                    <button 
+                      onClick={() => { setShowLocker(true); setIsMenuOpen(false); }}
+                      className="w-full py-3 px-4 bg-blue-50 text-blue-900 font-bold rounded-lg flex items-center justify-center gap-2"
+                    >
+                      <Lock size={16} /> My Locker
+                      {myRentals.length > 0 && <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">{myRentals.length}</span>}
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => { setShowAuthModal(true); setIsMenuOpen(false); }}
+                    className="w-full py-3 px-4 bg-blue-950 text-white font-bold rounded-lg flex items-center justify-center gap-2"
+                  >
+                    <User size={16} /> Connect Student ID
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* --- Hero Section --- */}
@@ -188,27 +244,34 @@ const App = () => {
                 </button>
               </div>
 
-              {/* Stats Section same as before... */}
-              <div className="mt-12 flex items-center gap-6 pt-8 border-t border-slate-100">
-                <div><p className="text-2xl font-bold text-slate-900">42%</p><p className="text-xs text-slate-500 uppercase tracking-wide mt-1">Lower CO₂ footprint</p></div>
-                <div className="w-px h-10 bg-slate-200"></div>
-                <div><p className="text-2xl font-bold text-slate-900">0€</p><p className="text-xs text-slate-500 uppercase tracking-wide mt-1">Shipping Fees</p></div>
-                <div className="w-px h-10 bg-slate-200"></div>
-                <div><p className="text-2xl font-bold text-slate-900">300+</p><p className="text-xs text-slate-500 uppercase tracking-wide mt-1">Verified Students</p></div>
+              {/* Stats Section - Mobile Responsive */}
+              <div className="mt-12 grid grid-cols-3 gap-4 pt-8 border-t border-slate-100">
+                <div className="text-center sm:text-left">
+                  <p className="text-xl sm:text-2xl font-bold text-slate-900">42%</p>
+                  <p className="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wide mt-1">Lower CO₂</p>
+                </div>
+                <div className="text-center sm:text-left border-l border-slate-200 pl-4">
+                  <p className="text-xl sm:text-2xl font-bold text-slate-900">0€</p>
+                  <p className="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wide mt-1">Shipping</p>
+                </div>
+                <div className="text-center sm:text-left border-l border-slate-200 pl-4">
+                  <p className="text-xl sm:text-2xl font-bold text-slate-900">300+</p>
+                  <p className="text-[10px] sm:text-xs text-slate-500 uppercase tracking-wide mt-1">Students</p>
+                </div>
               </div>
             </div>
 
-            <div className="lg:col-span-6 relative h-full min-h-[500px] flex items-center justify-center">
-               {/* Same visual cards as before */}
-               <div className="relative w-full max-w-md">
-                <div className="bg-white p-4 rounded-xl shadow-2xl border border-slate-100 transform -rotate-3 hover:rotate-0 transition duration-700 ease-out z-20 relative">
-                  <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600" className="rounded-lg aspect-[4/5] object-cover w-full mb-4 grayscale-[20%] hover:grayscale-0 transition duration-700" alt="Fashion item"/>
+            <div className="lg:col-span-6 relative hidden sm:flex h-full min-h-[400px] lg:min-h-[500px] items-center justify-center">
+               {/* Hero Card - Hidden on very small screens */}
+               <div className="relative w-full max-w-sm lg:max-w-md">
+                <div className="bg-white p-3 sm:p-4 rounded-xl shadow-2xl border border-slate-100 transform -rotate-3 hover:rotate-0 transition duration-700 ease-out z-20 relative">
+                  <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=600" className="rounded-lg aspect-[4/5] object-cover w-full mb-3 sm:mb-4 grayscale-[20%] hover:grayscale-0 transition duration-700" alt="Fashion item"/>
                   <div className="flex justify-between items-end">
                     <div>
-                      <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Gala Ready</p>
-                      <p className="font-serif font-bold text-xl text-slate-900">Silk Gown</p>
+                      <p className="text-[10px] sm:text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Gala Ready</p>
+                      <p className="font-serif font-bold text-lg sm:text-xl text-slate-900">Silk Gown</p>
                     </div>
-                    <span className="bg-blue-50 text-blue-900 px-3 py-1 rounded font-bold text-sm">€25/day</span>
+                    <span className="bg-blue-50 text-blue-900 px-2 sm:px-3 py-1 rounded font-bold text-xs sm:text-sm">€25/day</span>
                   </div>
                 </div>
               </div>
@@ -217,28 +280,27 @@ const App = () => {
         </div>
       </header>
 
-      {/* --- Collections Section (Unchanged) --- */}
-      <section id="collections" className="py-20 bg-slate-50 border-y border-slate-200">
+      {/* --- Collections Section --- */}
+      <section id="collections" className="py-12 sm:py-20 bg-slate-50 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           {/* ... Collections code same as original ... */}
-           <div className="flex justify-between items-end mb-12">
+           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-8 sm:mb-12 gap-4">
             <div>
-              <h2 className="text-3xl font-bold text-slate-900 font-serif">Curated Collections</h2>
-              <p className="text-slate-500 mt-2 max-w-lg">Tailored for the ESCP calendar. From library study sessions to the Winter Gala.</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif">Curated Collections</h2>
+              <p className="text-slate-500 mt-2 text-sm sm:text-base max-w-lg">Tailored for the ESCP calendar. From study sessions to the Winter Gala.</p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
             {COLLECTIONS.map((collection, idx) => (
               <div 
                 key={collection.id} 
-                onClick={() => setActiveFilter(collection.id)}
-                className={`group cursor-pointer relative overflow-hidden rounded-xl h-80 ${activeFilter === collection.id ? 'ring-2 ring-blue-900 ring-offset-4' : ''}`}
+                onClick={() => { setActiveFilter(collection.id); document.getElementById('marketplace').scrollIntoView({ behavior: 'smooth' }); }}
+                className={`group cursor-pointer relative overflow-hidden rounded-xl h-48 sm:h-80 ${activeFilter === collection.id ? 'ring-2 ring-blue-900 ring-offset-2 sm:ring-offset-4' : ''}`}
               >
                 <img src={collection.image} alt="" className="absolute inset-0 w-full h-full object-cover transition duration-1000 group-hover:scale-105"/>
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent p-8 flex flex-col justify-end">
-                  <span className="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-2">Collection 0{idx+1}</span>
-                  <h3 className="text-2xl font-bold text-white font-serif mb-1">{collection.label}</h3>
-                  <p className="text-slate-300 text-sm font-light">{collection.sub}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent p-4 sm:p-8 flex flex-col justify-end">
+                  <span className="text-yellow-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-1 sm:mb-2">Collection 0{idx+1}</span>
+                  <h3 className="text-lg sm:text-2xl font-bold text-white font-serif mb-0.5 sm:mb-1">{collection.label}</h3>
+                  <p className="text-slate-300 text-xs sm:text-sm font-light">{collection.sub}</p>
                 </div>
               </div>
             ))}
@@ -249,23 +311,24 @@ const App = () => {
       {/* --- Marketplace --- */}
       <section id="marketplace" className="py-24 bg-white min-h-screen">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-8 border-b border-slate-100 pb-8">
-            <div>
-              <h2 className="text-4xl font-bold text-slate-900 font-serif mb-3">Marketplace</h2>
-              {/* Dynamic Filter Tags */}
-              <div className="flex flex-wrap gap-2">
-                <button onClick={() => setActiveFilter('all')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition ${activeFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>All Items</button>
-                {['gala', 'interview', 'essentials', 'casual', 'formal'].map(filter => (
-                  <button key={filter} onClick={() => setActiveFilter(filter)} className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide transition ${activeFilter === filter ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 sm:mb-12 gap-6 border-b border-slate-100 pb-6 sm:pb-8">
+            <div className="w-full md:w-auto">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 font-serif mb-3">Marketplace</h2>
+              {/* Dynamic Filter Tags - Scrollable on mobile */}
+              <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap scrollbar-hide">
+                <button onClick={() => setActiveFilter('all')} className={`px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide transition whitespace-nowrap flex-shrink-0 ${activeFilter === 'all' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>All Items</button>
+                {['gala', 'interview', 'essentials'].map(filter => (
+                  <button key={filter} onClick={() => setActiveFilter(filter)} className={`px-3 sm:px-4 py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wide transition whitespace-nowrap flex-shrink-0 ${activeFilter === filter ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}>
                     {filter}
                   </button>
                 ))}
               </div>
             </div>
             
-            <div className="flex bg-slate-100 p-1.5 rounded-lg">
-              <button onClick={() => setActiveTab('rent')} className={`px-8 py-2.5 rounded-md text-sm font-bold transition flex items-center shadow-sm ${activeTab === 'rent' ? 'bg-white text-blue-900 shadow' : 'text-slate-500 hover:text-slate-700'}`}>Rent</button>
-              <button onClick={() => setActiveTab('buy')} className={`px-8 py-2.5 rounded-md text-sm font-bold transition flex items-center shadow-sm ${activeTab === 'buy' ? 'bg-white text-blue-900 shadow' : 'text-slate-500 hover:text-slate-700'}`}>Buy</button>
+            {/* Rent/Buy Toggle - Full width on mobile */}
+            <div className="flex bg-slate-100 p-1 sm:p-1.5 rounded-lg w-full sm:w-auto">
+              <button onClick={() => setActiveTab('rent')} className={`flex-1 sm:flex-none px-6 sm:px-8 py-2.5 rounded-md text-sm font-bold transition flex items-center justify-center ${activeTab === 'rent' ? 'bg-white text-blue-900 shadow' : 'text-slate-500 hover:text-slate-700'}`}>Rent</button>
+              <button onClick={() => setActiveTab('buy')} className={`flex-1 sm:flex-none px-6 sm:px-8 py-2.5 rounded-md text-sm font-bold transition flex items-center justify-center ${activeTab === 'buy' ? 'bg-white text-blue-900 shadow' : 'text-slate-500 hover:text-slate-700'}`}>Buy</button>
             </div>
           </div>
 
@@ -368,26 +431,26 @@ const App = () => {
       </section>
 
       {/* --- Footer --- */}
-      <footer className="bg-white text-slate-900 py-16 border-t border-slate-200">
+      <footer className="bg-white text-slate-900 py-12 sm:py-16 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-12">
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-6">
-                <Logo className="text-blue-950 w-8 h-8"/> 
-                <span className="text-xl font-bold tracking-tight text-blue-950">CampusCloset</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 mb-4 sm:mb-6">
+                <Logo className="text-blue-950 w-7 h-7 sm:w-8 sm:h-8"/> 
+                <span className="text-lg sm:text-xl font-bold tracking-tight text-blue-950">CampusCloset</span>
               </div>
-              <p className="text-sm text-slate-500 leading-relaxed mb-6">
-                The first circular economy marketplace verified for ESCP Business School. Sustainable style, student prices.
+              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-4 sm:mb-6">
+                The first circular economy marketplace verified for ESCP Business School.
               </p>
               <div className="inline-flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-full">
                 <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                <span className="text-xs font-bold text-blue-900 uppercase tracking-wide">Beta Live</span>
+                <span className="text-[10px] sm:text-xs font-bold text-blue-900 uppercase tracking-wide">Beta Live</span>
               </div>
             </div>
 
             <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Founding Team</h4>
-              <ul className="space-y-3 text-sm font-medium text-slate-700">
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider text-slate-400 mb-4 sm:mb-6">Founding Team</h4>
+              <ul className="space-y-2 sm:space-y-3 text-xs sm:text-sm font-medium text-slate-700">
                 <li>Nayab Azhar</li>
                 <li>Antonio Santarsiere</li>
                 <li>Ina Angebault</li>
@@ -397,25 +460,25 @@ const App = () => {
               </ul>
             </div>
 
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Campus Location</h4>
-              <div className="flex items-start mb-4">
-                <span className="text-sm text-slate-600">
+            <div className="col-span-2 sm:col-span-1">
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider text-slate-400 mb-4 sm:mb-6">Campus Location</h4>
+              <div className="flex items-start mb-3 sm:mb-4">
+                <span className="text-xs sm:text-sm text-slate-600">
                   ESCP Business School<br/>
                   Champerret Campus<br/>
-                  6 Avenue de la Porte de Champerret<br/>
+                  6 Ave de la Porte de Champerret<br/>
                   75017 Paris, France
                 </span>
               </div>
               <div className="flex items-center text-slate-600">
-                <Lock size={14} className="mr-2"/>
-                <span className="text-sm">3rd Floor Lockers (Hall B)</span>
+                <Lock size={14} className="mr-2 flex-shrink-0"/>
+                <span className="text-xs sm:text-sm">3rd Floor Lockers (Hall B)</span>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-bold text-sm uppercase tracking-wider text-slate-400 mb-6">Support</h4>
-              <ul className="space-y-2 text-sm text-slate-600">
+            <div className="hidden sm:block">
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider text-slate-400 mb-4 sm:mb-6">Support</h4>
+              <ul className="space-y-2 text-xs sm:text-sm text-slate-600">
                 <li><a href="#" className="hover:text-blue-900 transition">How Deposits Work</a></li>
                 <li><a href="#" className="hover:text-blue-900 transition">Locker Access Guide</a></li>
                 <li><a href="#" className="hover:text-blue-900 transition">Sustainability Report</a></li>
@@ -424,9 +487,9 @@ const App = () => {
             </div>
           </div>
           
-          <div className="mt-16 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
+          <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center text-[10px] sm:text-xs text-slate-400 gap-2">
             <p>&copy; 2025 CampusCloset Project. All rights reserved.</p>
-            <div className="mt-4 md:mt-0">
+            <div>
               Built with purpose in Paris.
             </div>
           </div>

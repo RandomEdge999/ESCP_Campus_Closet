@@ -4,7 +4,7 @@ A student-exclusive fashion marketplace for ESCP Business School. Rent and buy f
 
 ---
 
-## 🚀 Quick Start (No Coding Experience Needed!)
+## Quick Start (No Coding Experience Needed!)
 
 ### Prerequisites
 You need **Node.js** installed on your computer. If you don't have it:
@@ -110,7 +110,7 @@ Champerret Campus
 
 ---
 
-## 🌐 Deploying to GitHub Pages
+## Deploying to GitHub Pages
 
 The site is set up for **automatic deployment**. Every time you push to the `main` branch, it will automatically build and deploy!
 

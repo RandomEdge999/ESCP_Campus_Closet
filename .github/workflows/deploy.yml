@@ -1,6 +1,4 @@
 # Automatic deployment to GitHub Pages
-# Every time you push to main branch, this will build and deploy your site
-
 name: Deploy to GitHub Pages
 
 on:
@@ -25,9 +23,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -53,4 +51,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

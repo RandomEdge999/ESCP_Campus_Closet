@@ -10,7 +10,8 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
     priceBuy: '',
     priceRent: '',
     description: '',
-    image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800'
+    image: '', // Start empty
+    condition: 'Good'
   });
 
   // Early return AFTER hooks
@@ -23,6 +24,18 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
     return 10;
   };
 
+  const handleSimulateUpload = () => {
+    // Simulates uploading an image by picking a random fashion image from Unsplash
+    const images = [
+      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1550928431-ee0ec6db30d3?auto=format&fit=crop&q=80&w=800"
+    ];
+    const randomImage = images[Math.floor(Math.random() * images.length)];
+    setFormData({...formData, image: randomImage});
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const deposit = getSuggestedDeposit(formData.category);
@@ -30,6 +43,8 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
     const newItem = {
       id: Date.now(),
       ...formData,
+      // Use placeholder if no image provided
+      image: formData.image || "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800",
       priceBuy: Number(formData.priceBuy),
       priceRent: Number(formData.priceRent),
       deposit: deposit,
@@ -37,7 +52,6 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
       seller: "You (Student)",
       sellerRating: 5.0,
       sellerYear: "Batch 2025",
-      condition: "Good"
     };
 
     onAddItem(newItem);
@@ -49,7 +63,8 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
       priceBuy: '',
       priceRent: '',
       description: '',
-      image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800'
+      image: '',
+      condition: 'Good'
     });
     onClose();
   };
@@ -77,6 +92,28 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
             />
           </div>
 
+          <div>
+            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Item Photo</label>
+            <div className="flex gap-2">
+              <input 
+                className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900 outline-none text-sm"
+                placeholder="Paste Image URL..."
+                value={formData.image}
+                onChange={e => setFormData({...formData, image: e.target.value})}
+              />
+              <button 
+                type="button"
+                onClick={handleSimulateUpload}
+                className="px-4 py-2 bg-slate-200 text-slate-600 text-xs font-bold uppercase rounded-lg hover:bg-slate-300 transition"
+              >
+                Upload
+              </button>
+            </div>
+            {formData.image && (
+              <img src={formData.image} alt="Preview" className="mt-3 w-full h-32 object-cover rounded-lg border border-slate-200" />
+            )}
+          </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Category</label>
@@ -92,13 +129,16 @@ const ListingModal = ({ isOpen, onClose, onAddItem }) => {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Size</label>
+              <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Condition</label>
               <select 
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg outline-none text-sm"
-                value={formData.size}
-                onChange={e => setFormData({...formData, size: e.target.value})}
+                value={formData.condition}
+                onChange={e => setFormData({...formData, condition: e.target.value})}
               >
-                <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+                <option value="New">Brand New (A)</option>
+                <option value="Like New">Like New (A-)</option>
+                <option value="Good">Good (B)</option>
+                <option value="Fair">Fair (C)</option>
               </select>
             </div>
           </div>

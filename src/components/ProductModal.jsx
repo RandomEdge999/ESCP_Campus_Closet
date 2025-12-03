@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, User, ArrowRight, ShieldCheck, Lock } from 'lucide-react';
 
-const ProductModal = ({ item, isOpen, onClose, mode, onAddToCart }) => {
+const ProductModal = ({ item, isOpen, onClose, mode, onAddToCart, onViewSeller }) => {
   if (!isOpen || !item) return null;
 
   const total = mode === 'rent' ? item.priceRent + item.deposit : item.priceBuy;
@@ -44,9 +44,12 @@ const ProductModal = ({ item, isOpen, onClose, mode, onAddToCart }) => {
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-serif">{item.title}</h2>
               <div className="flex items-center space-x-3 text-sm text-slate-500 mt-2">
-                <div className="flex items-center text-blue-900 font-semibold bg-blue-50 px-2 py-1 rounded">
+                <button 
+                  onClick={() => onViewSeller(item.seller)}
+                  className="flex items-center text-blue-900 font-semibold bg-blue-50 px-2 py-1 rounded hover:bg-blue-100 transition"
+                >
                   <User size={14} className="mr-1.5"/> {item.seller}
-                </div>
+                </button>
                 <span>{item.sellerYear}</span>
               </div>
             </div>

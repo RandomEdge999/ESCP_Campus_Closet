@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Lock, User, ArrowRight, Menu, X, Star, Filter, Plus
+  Lock, User, ArrowRight, Menu, X, Star, Filter, Plus, Search
 } from 'lucide-react';
 
 // Components
@@ -8,24 +8,30 @@ import Logo from './components/Logo';
 import AuthModal from './components/AuthModal';
 import ProductModal from './components/ProductModal';
 import LockerDashboard from './components/LockerDashboard';
-import ListingModal from './components/ListingModal'; // IMPORT THE NEW MODAL
+import ListingModal from './components/ListingModal';
+import SellerModal from './components/SellerModal'; // Import it
 
 // Data
 import { COLLECTIONS } from './data/collections';
 import { MOCK_ITEMS } from './data/items';
 
 const App = () => {
-  // Lifted items to state to allow adding new ones
-  const [items, setItems] = useState(MOCK_ITEMS);
+  // Load from local storage or use defaults
+  const [items, setItems] = useState(() => {
+    const saved = localStorage.getItem('cc_items');
+    return saved ? JSON.parse(saved) : MOCK_ITEMS;
+  });
   
   const [activeTab, setActiveTab] = useState('buy');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState(''); // New Search State
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showListingModal, setShowListingModal] = useState(false); // New State
+  const [showListingModal, setShowListingModal] = useState(false);
+  const [selectedSeller, setSelectedSeller] = useState(null); // New Seller State
   
   const [selectedItem, setSelectedItem] = useState(null);
   const [showLocker, setShowLocker] = useState(false);
@@ -38,7 +44,10 @@ const App = () => {
   };
 
   const handleAddItem = (newItem) => {
-    setItems([newItem, ...items]);
+    const updatedItems = [newItem, ...items];
+    setItems(updatedItems);
+    localStorage.setItem('cc_items', JSON.stringify(updatedItems));
+    
     // Optionally switch to 'all' view to see the new item
     setActiveFilter('all');
     // Scroll to marketplace
@@ -63,8 +72,16 @@ const App = () => {
   }, []);
 
   const filteredItems = items.filter(item => {
+    // Search Filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      return item.title.toLowerCase().includes(query) || 
+             item.tags.some(tag => tag.includes(query)) ||
+             item.category.toLowerCase().includes(query);
+    }
+    
+    // Category Filter
     if (activeFilter === 'all') return true;
-    // Enhanced filtering to check both tags and category
     return item.tags.includes(activeFilter) || item.category.toLowerCase() === activeFilter;
   });
 
@@ -82,7 +99,14 @@ const App = () => {
         isOpen={!!selectedItem} 
         onClose={() => setSelectedItem(null)} 
         mode={activeTab} 
-        onAddToCart={handleAddToCart} 
+        onAddToCart={handleAddToCart}
+        onViewSeller={(name) => setSelectedSeller(name)} 
+      />
+      
+      <SellerModal
+        sellerName={selectedSeller || ''}
+        isOpen={!!selectedSeller}
+        onClose={() => setSelectedSeller(null)}
       />
       
       <LockerDashboard 
@@ -115,8 +139,20 @@ const App = () => {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#collections" className="text-sm font-medium text-slate-500 hover:text-blue-900 transition-colors">Curated Collections</a>
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+            {/* Search Bar */}
+            <div className="relative group">
+               <input 
+                  type="text" 
+                  placeholder="Search..." 
+                  value={searchQuery}
+                  onChange={(e) => { setSearchQuery(e.target.value); if(e.target.value) setActiveFilter('all'); }}
+                  className="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-blue-900 focus:border-blue-900 outline-none w-32 focus:w-48 transition-all"
+               />
+               <Search size={16} className="absolute left-3 top-2.5 text-slate-400 group-focus-within:text-blue-900 transition-colors"/>
+            </div>
+
+            <a href="#collections" className="text-sm font-medium text-slate-500 hover:text-blue-900 transition-colors">Collections</a>
             <a href="#marketplace" className="text-sm font-medium text-slate-500 hover:text-blue-900 transition-colors">Marketplace</a>
             <a href="#how-it-works" className="text-sm font-medium text-slate-500 hover:text-blue-900 transition-colors">Locker System</a>
             

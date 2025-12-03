@@ -13,10 +13,13 @@ const AuthModal = ({ isOpen, onClose, onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email.includes('escp') || email.includes('ESCP')) {
+    // Strict domain validation
+    const escpRegex = /^[a-zA-Z0-9._%+-]+@edu\.escp\.eu$/;
+    
+    if (escpRegex.test(email) || email.endsWith('@edu.escp.eu')) {
       onLogin(email);
     } else {
-      setError('Access restricted to ESCP students. Please use your school email.');
+      setError('Access restricted. You must use a valid @edu.escp.eu student email.');
     }
   };
   

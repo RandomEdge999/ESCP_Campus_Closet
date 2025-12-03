@@ -1,9 +1,24 @@
-import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import React, { useState } from 'react';
+import { ShieldCheck, AlertCircle } from 'lucide-react';
 import Logo from './Logo';
 
 const AuthModal = ({ isOpen, onClose, onLogin }) => {
+  // Hooks MUST be called before any early returns!
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  // Early return AFTER hooks
   if (!isOpen) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email.includes('escp') || email.includes('ESCP')) {
+      onLogin(email);
+    } else {
+      setError('Access restricted to ESCP students. Please use your school email.');
+    }
+  };
   
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-300">
@@ -22,13 +37,16 @@ const AuthModal = ({ isOpen, onClose, onLogin }) => {
               Please authenticate with your student credentials to access the marketplace and locker codes.
             </p>
           </div>
-          <form onSubmit={(e) => { e.preventDefault(); onLogin(); }} className="space-y-5">
+          
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">ESCP Email</label>
               <input 
                 type="email" 
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(''); }}
                 placeholder="student@edu.escp.eu" 
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-blue-900 outline-none transition text-sm font-medium" 
+                className={`w-full px-4 py-3 bg-slate-50 border rounded-lg focus:ring-2 focus:ring-blue-900 outline-none transition text-sm font-medium ${error ? 'border-red-500' : 'border-slate-200'}`}
                 required 
               />
             </div>
@@ -36,11 +54,20 @@ const AuthModal = ({ isOpen, onClose, onLogin }) => {
               <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Password</label>
               <input 
                 type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" 
-                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900 focus:border-blue-900 outline-none transition text-sm font-medium" 
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-900 outline-none transition text-sm font-medium" 
                 required 
               />
             </div>
+            
+            {error && (
+              <div className="flex items-center text-red-600 text-xs font-bold animate-in slide-in-from-top-1">
+                <AlertCircle size={14} className="mr-2"/> {error}
+              </div>
+            )}
+
             <button 
               type="submit" 
               className="w-full py-4 bg-blue-950 hover:bg-blue-900 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm uppercase tracking-wide"
@@ -61,4 +88,3 @@ const AuthModal = ({ isOpen, onClose, onLogin }) => {
 };
 
 export default AuthModal;
-
